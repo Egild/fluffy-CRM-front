@@ -1,4 +1,6 @@
-body
-{
-  background-color: white;
-}
+@import 'settings.scss';
+
+
+@import '../../components/header/index.scss';
+@import '../../components/footer/index.scss';
+@import '../../components/client-list/index.scss';

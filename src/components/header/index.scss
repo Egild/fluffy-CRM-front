@@ -1,0 +1,53 @@
+.header
+{
+  margin-bottom: 0.5rem;
+
+  &-title
+  {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+
+  }
+
+  .search
+  {
+    position: relative;
+    padding: $defaultPadding;
+    font-size: 1rem;
+    outline: orange;
+    border-radius: $defaultBorderRadius;
+
+    &-list
+    {
+      display: none;
+      background-color: $defaultBackgroundColor;
+      padding: $defaultPadding;
+      border: 1px solid $defaultBorderColor;
+      border-radius: $defaultBorderRadius;
+      z-index: 100;
+      width: 100%;
+      margin: 0 auto;
+
+      &.active
+      {
+        display: block;
+      }
+
+      &-item
+      {
+        padding: $defaultPadding;
+        margin-bottom: 0.5rem;
+
+        &:hover
+        {
+          background-color: $defaultHoverBackgroundColor;
+        }
+
+      }
+    }
+  }
+
+
+
+
+}
