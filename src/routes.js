@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 import {
     Router,
     Route,
@@ -9,10 +11,7 @@ import {
 /* views */
 import App from './index.jsx';
 
-export default () => (
-    <Router history={browserHistory}>
-        <Route path='/' component={App}>
-            <IndexRoute component={Home} />
-        </Route>
-    </Router>
+ReactDOM.render(
+    <App/>,
+    document.getElementById("app")
 );

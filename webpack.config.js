@@ -2,14 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 const publicPath = '/dist/build/';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const NODE_MODULES_PATH = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
-    entry: './src/index.jsx',
+    entry: './src/routes.js',
     devtool: 'cheap-module-source-map',
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Task manager',
+            title: 'Fluffy-CRM',
             template: './index.html'
         }),
         new webpack.HotModuleReplacementPlugin()
@@ -58,7 +58,7 @@ module.exports = {
             },
             {
                 test: /\.js|.jsx?$/,
-                exclude: /(node_modules)/,
+                exclude: NODE_MODULES_PATH,
                 loaders: ["babel-loader"]
             }
         ],
@@ -68,5 +68,5 @@ module.exports = {
                 loader: 'html-loader'
             }
         ]
-    },
+    }
 }

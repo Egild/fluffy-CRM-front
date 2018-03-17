@@ -9,16 +9,14 @@
 
   }
 
-  .search
-  {
+  .search {
     position: relative;
     padding: $defaultPadding;
     font-size: 1rem;
     outline: orange;
     border-radius: $defaultBorderRadius;
 
-    &-list
-    {
+    &-list {
       display: none;
       background-color: $defaultBackgroundColor;
       padding: $defaultPadding;
@@ -28,26 +26,36 @@
       width: 100%;
       margin: 0 auto;
 
-      &.active
-      {
+      &.active {
         display: block;
       }
 
-      &-item
-      {
+      &-item {
+        cursor: pointer;
         padding: $defaultPadding;
         margin-bottom: 0.5rem;
 
-        &:hover
-        {
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &:hover {
           background-color: $defaultHoverBackgroundColor;
         }
 
       }
     }
   }
+}
 
+.btn
+{
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
 
-
-
+  &.hidden
+  {
+    display: none;
+  }
 }

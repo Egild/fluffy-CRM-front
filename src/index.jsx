@@ -1,6 +1,5 @@
-import React from 'react';
-import { Provider } from 'mobx-react';
-import { useStrict } from 'mobx';
+import React, {Component} from 'react';
+import {Provider} from 'mobx-react';
 
 
 
@@ -13,24 +12,25 @@ import Footer from './components/footer/index.jsx';
 import ClientList from './components/client-list/index.jsx';
 
 // stores
+import ClientStore from './stores/ClientStore.js';
+import SearchStore from './stores/SearchStore.js';
 
-import searchStore from './stores/search.js';
-import clientStore from './stores/client.js';
+const stores = {ClientStore, SearchStore};
 
-useStrict(true);
-const stores = {searchStore, clientStore};
+class App extends Component {
+    render(){
+        return (
+                <Provider {...stores}>
+                    <div className="page-wrapper">
+                        <Header />
+                        <ClientList />
+                        <Footer />
+                    </div>
+                </Provider>
 
-
-const App = props => (
-    <Provider {...stores}>
-        <div className="page-wrapper">
-            <Header />
-            <div>{props}</div>
-            <ClientList />
-            <Footer />
-        </div>
-    </Provider>
-);
+        )
+    }
+}
 
 export default App;
 
