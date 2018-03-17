@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 class Footer extends Component {
     render(){
-        return <div className="footer">тут будет футер</div>
+        return <div className="footer"></div>
     }
 }
 

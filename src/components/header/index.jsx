@@ -25,7 +25,7 @@ class Header extends Component {
         let buttonClass = cx({
             btn: true,
             hidden: !this.state.showAddToggle
-        })
+        });
         return <div className="header">
             <div className="header-title">Поиск клиента:</div>
             <input className="search-input"
@@ -36,7 +36,7 @@ class Header extends Component {
             <div className={listClass}>
                 {this.state.clients}
             </div>
-            <div className={buttonClass}>
+            <div className={buttonClass} onClick={this.openAddClientForm}>
                 Добавить Клиента
             </div>
             <Client client={this.state.currentClient}></Client>
@@ -67,7 +67,6 @@ class Header extends Component {
                 }
             });
     }
-
     choiseClient = (bufferClient) =>{
         let state = {...this.state};
         let query = "http://mbt-bs.com/whitefox/api/customer?id=" + bufferClient.id;
@@ -84,6 +83,10 @@ class Header extends Component {
             })
 
 
+    }
+    openAddClientForm = () =>{
+        let newState = {...this.state};
+        this.setState(newState);
     }
 }
 

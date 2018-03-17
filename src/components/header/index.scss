@@ -13,18 +13,28 @@
     position: relative;
     padding: $defaultPadding;
     font-size: 1rem;
-    outline: orange;
     border-radius: $defaultBorderRadius;
+
+    &-input
+    {
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid black;
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
     &-list {
       display: none;
       background-color: $defaultBackgroundColor;
       padding: $defaultPadding;
-      border: 1px solid $defaultBorderColor;
+      border: 1px solid black;
       border-radius: $defaultBorderRadius;
       z-index: 100;
       width: 100%;
-      margin: 0 auto;
+      box-sizing: border-box;
+      margin: 10px auto;
 
       &.active {
         display: block;
