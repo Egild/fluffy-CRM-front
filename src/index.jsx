@@ -9,7 +9,7 @@ import './assets/styles/index.scss';
 
 import Header from './components/header/index.jsx';
 import Footer from './components/footer/index.jsx';
-import ClientList from './components/client-list/index.jsx';
+import ClientForm from './components/client-form/index.jsx';
 
 // stores
 import ClientStore from './stores/ClientStore.js';
@@ -18,12 +18,18 @@ import SearchStore from './stores/SearchStore.js';
 const stores = {ClientStore, SearchStore};
 
 class App extends Component {
+    constructor(){
+        super();
+        this.state = {
+            currentClient: null
+        }
+    }
     render(){
         return (
                 <Provider {...stores}>
                     <div className="page-wrapper">
                         <Header />
-                        <ClientList />
+                        <ClientForm client={this.state.currentClient}/>
                         <Footer />
                     </div>
                 </Provider>

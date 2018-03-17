@@ -78,6 +78,8 @@ class Header extends Component {
             .then(data => {
                 let client = data;
                 state.currentClient = client;
+                state.showList = false;
+                state.showAddToggle = false;
                 this.setState(state)
             })
 
