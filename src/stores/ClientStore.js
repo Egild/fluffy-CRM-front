@@ -1,10 +1,11 @@
 import {observable, action, autorun} from 'mobx';
+import ClientModel from '../models/client-model.js';
 
 class ClientStore {
-    @observable clients;
+    @observable clients = [];
 
-    constructor(){
-        this.clients = [];
+    addClient(client){
+        this.clients.push(new ClientModel(this, client));
     }
 
     @action("fetch request for clients")
@@ -16,6 +17,14 @@ class ClientStore {
             .then(data => {
                 this.clients = data;
             });
+    }
+
+    @action putClients(clients){
+        let clientArray = [];
+        clients.forEach(client => {
+            clientArray.push = (new ClientStore(client));
+        });
+        this.clients = clientArray;
     }
 
 }

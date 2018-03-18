@@ -1,12 +1,20 @@
 import {observable, action} from 'mobx';
 
-class SearchStore {
+export default class SearchStore {
     @observable showSearch;
 
     @action('search toggle')
-    searchToggle(){
+    toggle(){
         this.showSearch = !this.showSearch;
     }
-}
 
-export default new SearchStore();
+    @action('close search')
+    closeSearch(){
+        this.showSearch = false;
+    }
+
+    @action('open search')
+    openSearch(){
+        this.showSearch = true;
+    }
+}
