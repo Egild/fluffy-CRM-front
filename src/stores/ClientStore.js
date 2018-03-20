@@ -2,8 +2,12 @@ import {observable, action, autorun} from 'mobx';
 import ClientModel from '../models/client-model.js';
 
 class ClientStore {
-    @observable clients = [];
+    @observable clients;
 
+    constructor(){
+        this.clients = [];
+        autorun(() => this.getClients());
+    }
     addClient(client){
         this.clients.push(new ClientModel(this, client));
     }
@@ -30,4 +34,3 @@ class ClientStore {
 }
 
 export default new ClientStore();
-export {ClientStore};
