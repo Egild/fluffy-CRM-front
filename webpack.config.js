@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NODE_MODULES_PATH = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
-    entry: './src/routes.js',
+    entry: './src/index.jsx',
     devtool: 'cheap-module-source-map',
     plugins: [
         new HtmlWebpackPlugin({

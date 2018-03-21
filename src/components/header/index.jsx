@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import {observable} from 'mobx';
+import {observer} from 'mobx-react';
 
 import Client from '../client-item/index.jsx';
 
@@ -7,14 +9,15 @@ import classNames from 'classnames/bind';
 
 let cx = classNames.bind();
 
+@observer
 class Header extends Component {
+    @observable currentClient;
     constructor(){
         super();
         this.state = {
             clients: [],
             showAddToggle: false,
-            showList: false,
-            currentClient: null
+            showList: false
         };
     }
     render(){
@@ -39,7 +42,7 @@ class Header extends Component {
             <div className={buttonClass} onClick={this.openAddClientForm}>
                 Добавить Клиента
             </div>
-            <Client client={this.state.currentClient}></Client>
+            <Client client={this.props.clientStore.currentClient}></Client>
         </div>
     }
 
@@ -57,7 +60,7 @@ class Header extends Component {
                     let clients = data.map((client)=>
                         <div className="search-list-item"
                              key={client.id}
-                             onClick={() => this.choiseClient(client)}
+                             onClick={() => this.chooseClient(client)}
                         >
                             {client.name}
                         </div>);
@@ -67,7 +70,7 @@ class Header extends Component {
                 }
             });
     }
-    choiseClient = (bufferClient) =>{
+    chooseClient = (bufferClient) =>{
         let state = {...this.state};
         let query = "http://mbt-bs.com/whitefox/api/customer?id=" + bufferClient.id;
         fetch(query)
@@ -76,7 +79,7 @@ class Header extends Component {
             })
             .then(data => {
                 let client = data;
-                state.currentClient = client;
+                this.props.clientStore.currentClient = client;
                 state.showList = false;
                 state.showAddToggle = false;
                 this.setState(state)

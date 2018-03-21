@@ -3,9 +3,11 @@ import ClientModel from '../models/client-model.js';
 
 class ClientStore {
     @observable clients;
+    @observable currentClient;
 
     constructor(){
         this.clients = [];
+        this.currentClient = null;
         autorun(() => this.getClients());
     }
     addClient(client){
@@ -23,14 +25,45 @@ class ClientStore {
             });
     }
 
-    @action putClients(clients){
-        let clientArray = [];
-        clients.forEach(client => {
-            clientArray.push = (new ClientStore(client));
-        });
-        this.clients = clientArray;
+    @action chooseClient(client){
+        this.currentClient = client;
+    }
+
+    @action setName(name){
+        this.currentClient.name = name;
+    }
+
+    @action setPhone(phone){
+        this.currentClient.phone = phone;
+    }
+
+    @action setEmail(email){
+        this.currentClient.email = email;
+    }
+
+    @action setBirthDate(birthDate){
+        this.currentClient.birthDate = birthDate;
+    }
+
+    @action setComment(comment){
+        this.currentClient.comment = comment;
+    }
+
+    @action saveClient(client){
+        fetch('http://mbt-bs.com/whitefox/api/customer', {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(client),
+            mode: 'cors'
+        }).then(
+            response => response.json()
+        ).then(
+            data => console.log(data)
+        )
     }
 
 }
-
-export default new ClientStore();
+const clientStore = new ClientStore();
+export default clientStore;

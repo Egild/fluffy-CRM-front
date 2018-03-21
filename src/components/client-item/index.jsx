@@ -5,7 +5,10 @@ class Client extends Component{
         console.log(this.props.client);
         if (this.props.client !== null){
             return <div className="client">
-                <div className="client-title">Карточка Клиента</div>
+                <div className="client-header">
+                    <div className="client-title">Карточка Клиента</div>
+                    <div className="client-edit">редактировать</div>
+                </div>
                 <div className="client-label">ФИО:</div>
                 <div className="client-name">
                     {this.props.client.name}

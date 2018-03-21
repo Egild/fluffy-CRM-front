@@ -1,0 +1,29 @@
+.side-bar-menu
+{
+  background-color: gray;
+  padding: 20px;
+  position: absolute;
+  right: calc(100% - 20px);
+
+  &.opened
+  {
+    right: auto;
+    left: 0;
+  }
+
+  &-toggle
+  {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: green;
+
+    &.opened
+    {
+      background-color: red;
+    }
+  }
+}
