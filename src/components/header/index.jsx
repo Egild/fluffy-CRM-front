@@ -4,7 +4,7 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 
 import Client from '../client-item/index.jsx';
-
+import SearchList from '../search-list/index.jsx';
 import classNames from 'classnames/bind';
 
 let cx = classNames.bind();
@@ -12,22 +12,13 @@ let cx = classNames.bind();
 @observer
 class Header extends Component {
     @observable currentClient;
-    constructor(){
-        super();
-        this.state = {
-            clients: [],
-            showAddToggle: false,
-            showList: false
-        };
-    }
+    @observable searchList;
+
     render(){
-        let listClass = cx({
-            "search-list": true,
-            "active": this.state.showList
-        });
+        const {appStateStore, clientStore} = this.props;
         let buttonClass = cx({
             btn: true,
-            hidden: !this.state.showAddToggle
+            hidden: !appStateStore.client.addClientButton.show
         });
         return <div className="header">
             <div className="header-title">Поиск клиента:</div>
@@ -36,61 +27,42 @@ class Header extends Component {
                    ref="searchInput"
                    onChange={this.searchClients}
                    />
-            <div className={listClass}>
-                {this.state.clients}
-            </div>
-            <div className={buttonClass} onClick={this.openAddClientForm}>
+            <SearchList appStateStore={appStateStore} clientStore={clientStore}/>
+            <div className={buttonClass} onClick={appStateStore.openAddClientForm}>
                 Добавить Клиента
             </div>
-            <Client client={this.props.clientStore.currentClient}></Client>
+            <Client appStateStore={appStateStore} clientStore={clientStore}></Client>
         </div>
     }
 
     searchClients = (event) => {
         event.preventDefault();
-        let listState = (ReactDOM.findDOMNode(this.refs.searchInput).value.length > 0)?(true):(false);
+
         let searchText = ReactDOM.findDOMNode(this.refs.searchInput).value;
-        let query = "http://mbt-bs.com/whitefox/api/customers?name=" + searchText;
-        fetch(query)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                if (data.length > 0){
-                    let clients = data.map((client)=>
-                        <div className="search-list-item"
-                             key={client.id}
-                             onClick={() => this.chooseClient(client)}
-                        >
-                            {client.name}
-                        </div>);
-                    this.setState({clients: clients, showAddToggle: false, showList: listState});
-                } else {
-                    this.setState({clients:[], showAddToggle: true, showList: false});
-                }
-            });
-    }
-    chooseClient = (bufferClient) =>{
-        let state = {...this.state};
-        let query = "http://mbt-bs.com/whitefox/api/customer?id=" + bufferClient.id;
-        fetch(query)
-            .then(response => {
-                return response.json()
-            })
-            .then(data => {
-                let client = data;
-                this.props.clientStore.currentClient = client;
-                state.showList = false;
-                state.showAddToggle = false;
-                this.setState(state)
-            })
+        this.props.appStateStore.showAddClientButton();
+        if (searchText.length > 0){
+            this.props.appStateStore.openSearchList();
+            let query = "http://mbt-bs.com/whitefox/api/customers?name=" + searchText;
+            fetch(query)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    this.props.clientStore.setSearchList(data);
+                    if (data.length === 0){
+                        this.props.appStateStore.closeSearchList();
+                        this.props.appStateStore.showAddClientButton();
+                    } else {
+                        this.props.appStateStore.hideAddClientButton();
+                    }
+                })
+        } else {
+            this.props.clientStore.setSearchList([]);
+            this.props.appStateStore.closeSearchList();
 
+        }
+    }
 
-    }
-    openAddClientForm = () =>{
-        let newState = {...this.state};
-        this.setState(newState);
-    }
 }
 
 export default Header;

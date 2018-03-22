@@ -1,14 +1,16 @@
-import {observable, action, autorun} from 'mobx';
-import ClientModel from '../models/client-model.js';
+import {observable, action} from 'mobx';
 
 class ClientStore {
     @observable clients;
     @observable currentClient;
+    @observable searchList;
+    @observable bufferClient;
 
     constructor(){
         this.clients = [];
+        this.searchList = [];
         this.currentClient = null;
-        autorun(() => this.getClients());
+        this.bufferClient = null;
     }
     addClient(client){
         this.clients.push(new ClientModel(this, client));
@@ -23,10 +25,6 @@ class ClientStore {
             .then(data => {
                 this.clients = data;
             });
-    }
-
-    @action chooseClient(client){
-        this.currentClient = client;
     }
 
     @action setName(name){
@@ -49,6 +47,18 @@ class ClientStore {
         this.currentClient.comment = comment;
     }
 
+    @action setWorks(works){
+        this.currentClient.works = works;
+    }
+
+    @action setSearchList(searchList){
+        this.searchList = searchList;
+    }
+
+    @action chooseClient(client){
+        this.currentClient = client;
+    }
+
     @action saveClient(client){
         fetch('http://mbt-bs.com/whitefox/api/customer', {
             method: "PUT",
@@ -60,8 +70,12 @@ class ClientStore {
         }).then(
             response => response.json()
         ).then(
-            data => console.log(data)
+            client => this.chooseClient(client)
         )
+    }
+
+    @action setBufferClient(client){
+        this.bufferClient = client;
     }
 
 }

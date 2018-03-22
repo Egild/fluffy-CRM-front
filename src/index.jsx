@@ -15,14 +15,13 @@ import './assets/styles/index.scss';
 import Header from './components/header/index.jsx';
 import Footer from './components/footer/index.jsx';
 import ClientForm from './components/client-form/index.jsx';
-import SideBarMenu from './components/side-bar-menu/index.jsx';
 
 // stores
 import clientStore from './stores/ClientStore.js';
 import searchStore from './stores/SearchStore.js';
-import menuStore from './stores/MenuStore.js';
+import appStateStore from './stores/AppStateStore.js';
 
-const stores = {clientStore, searchStore, menuStore};
+const stores = {clientStore, searchStore, appStateStore};
 
 
 class App extends React.Component {
@@ -36,9 +35,8 @@ class App extends React.Component {
         return (
                 <Provider {...stores}>
                     <div className="page-wrapper">
-                        <SideBarMenu menuStore={menuStore} />
-                        <Header clientStore={clientStore}/>
-                        <ClientForm clientStore={clientStore}/>
+                        <Header appStateStore={appStateStore} clientStore={clientStore}/>
+                        <ClientForm appStateStore={appStateStore} clientStore={clientStore}/>
                         <Footer />
                     </div>
                 </Provider>

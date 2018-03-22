@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
+import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 
 @observer
 class ClientForm extends Component{
+    @observable bufferClient;
+
 
     render(){
-        if (this.props.clientStore.currentClient !== null){
+        const {appStateStore, clientStore} = this.props;
+        if (clientStore.bufferClient !== null && appStateStore.client.viewMode === 'edit'){
             let editButtonText = "Сохранить";
             return (
                 <div className="clientForm">
@@ -91,7 +95,8 @@ class ClientForm extends Component{
     };
 
     saveClient = () => {
-        this.props.clientStore.saveClient(this.props.clientStore.currentClient);
+        this.props.clientStore.saveClient(this.props.clientStore.bufferClient);
+        this.props.appStateStore.closeClientEditForm();
     }
 }
 
