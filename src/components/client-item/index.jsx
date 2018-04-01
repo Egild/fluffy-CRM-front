@@ -3,19 +3,21 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 
 import Works from '../works/index.jsx';
+import WorkForm from "../work-form/index.jsx";
+
 
 @observer
 class Client extends Component{
     @observable currentClient;
 
     render(){
-        const { appStateStore, clientStore } = this.props;
+        const { appStateStore, clientStore, servicesStore, workStore, directoryStore} = this.props;
 
         if (appStateStore.client.viewMode === "view" && clientStore.currentClient !== null){
             return <div className="client">
                 <div className="client-header">
                     <div className="client-title">Карточка Клиента</div>
-                    <div className="client-edit" onClick={this.editClient}>Редактировать</div>
+                    <div className="btn" onClick={this.editClient}>Редактировать</div>
                 </div>
                 <div className="client-label">ФИО:</div>
                 <div className="client-name">
@@ -38,6 +40,7 @@ class Client extends Component{
                     {clientStore.currentClient.comment}
                 </div>
                 <Works appStateStore={appStateStore} works={clientStore.currentClient.workList}/>
+                <WorkForm appStateStore={appStateStore} clientStore={clientStore} servicesStore={servicesStore} workStore={workStore} directoryStore={directoryStore}/>
             </div>
         } else {
             return null
@@ -46,7 +49,7 @@ class Client extends Component{
 
     editClient = () =>{
         this.props.clientStore.setBufferClient(this.props.clientStore.currentClient);
-        this.props.appStateStore.openClientEditForm();
+        this.props.appStateStore.openClientEditForm('edit');
     }
 }
 

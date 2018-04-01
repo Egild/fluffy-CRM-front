@@ -9,56 +9,57 @@ class ClientForm extends Component{
 
     render(){
         const {appStateStore, clientStore} = this.props;
-        if (clientStore.bufferClient !== null && appStateStore.client.viewMode === 'edit'){
+        if (clientStore.bufferClient !== null && (appStateStore.client.viewMode === 'edit' || appStateStore.client.viewMode === 'create')){
             let editButtonText = "Сохранить";
             return (
-                <div className="clientForm">
-                    <div className="clientForm-field">
-                        <div className="clientForm-field-label">Имя</div>
-                        <div className="clientForm-field-input">
+                <div className="client-form">
+                    <div className="client-form-title">Измените данные о клиенте</div>
+                    <div className="field">
+                        <div className="field-label">ФИО</div>
+                        <div className="field-input">
                             <input type="text"
                                    ref="name"
-                                   value={this.props.clientStore.currentClient.name}
+                                   value={this.props.clientStore.bufferClient.name}
                                    onChange={() => this.setName("name")}
                             />
                         </div>
                     </div>
-                    <div className="clientForm-field">
-                        <div className="clientForm-field-label">Телефон</div>
-                        <div className="clientForm-field-input">
+                    <div className="field">
+                        <div className="field-label">Телефон</div>
+                        <div className="field-input">
                             <input type="text"
                                    ref="phone"
-                                   value={this.props.clientStore.currentClient.phone}
+                                   value={this.props.clientStore.bufferClient.phone}
                                    onChange={()=> this.setPhone("phone")}
                             />
                         </div>
                     </div>
-                    <div className="clientForm-field">
-                        <div className="clientForm-field-label">E-mail</div>
-                        <div className="clientForm-field-input">
+                    <div className="field">
+                        <div className="field-label">E-mail</div>
+                        <div className="field-input">
                             <input type="text"
                                    ref="email"
-                                   value={this.props.clientStore.currentClient.email}
+                                   value={this.props.clientStore.bufferClient.email}
                                    onChange={()=> this.setEmail("email")}
                             />
                         </div>
                     </div>
-                    <div className="clientForm-field">
-                        <div className="clientForm-field-label">Дата рождения</div>
-                        <div className="clientForm-field-input">
+                    <div className="field">
+                        <div className="field-label">Дата рождения</div>
+                        <div className="field-input">
                             <input type="text"
                                    ref="birthDate"
-                                   value={this.props.clientStore.currentClient.birthDate}
+                                   value={this.props.clientStore.bufferClient.birthDate}
                                    onChange={()=> this.setBirthDate("birthDate")}
                             />
                         </div>
                     </div>
-                    <div className="clientForm-field">
-                        <div className="clientForm-field-label">Комментарий</div>
-                        <div className="clientForm-field-input">
+                    <div className="field">
+                        <div className="field-label">Комментарий</div>
+                        <div className="field-input">
                             <input type="text"
                                    ref="comment"
-                                   value={this.props.clientStore.currentClient.comment}
+                                   value={this.props.clientStore.bufferClient.comment}
                                    onChange={()=> this.setComment("comment")}
                             />
                         </div>
@@ -66,6 +67,9 @@ class ClientForm extends Component{
                     <div className="btn"
                          onClick={this.saveClient}
                     >{editButtonText}</div>
+                    <div className="btn cancel"
+                         onClick={this.closeForm}
+                    >Закрыть</div>
                 </div>
             )
         } else {
@@ -97,7 +101,13 @@ class ClientForm extends Component{
     saveClient = () => {
         this.props.clientStore.saveClient(this.props.clientStore.bufferClient);
         this.props.appStateStore.closeClientEditForm();
-    }
+    };
+
+    closeForm = () => {
+        this.props.appStateStore.closeClientEditForm();
+    };
+
+
 }
 
 export default ClientForm;

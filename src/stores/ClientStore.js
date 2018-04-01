@@ -6,18 +6,18 @@ class ClientStore {
     @observable searchList;
     @observable bufferClient;
 
-    constructor(){
+    constructor() {
         this.clients = [];
         this.searchList = [];
         this.currentClient = null;
         this.bufferClient = null;
     }
-    addClient(client){
+
+    addClient(client) {
         this.clients.push(new ClientModel(this, client));
     }
 
-    @action("fetch request for clients")
-    getClients(){
+    @action getClients() {
         fetch('http://mbt-bs.com/whitefox/api/customers')
             .then(response => {
                 return response.json();
@@ -27,39 +27,39 @@ class ClientStore {
             });
     }
 
-    @action setName(name){
-        this.currentClient.name = name;
+    @action setName(name) {
+        this.bufferClient.name = name;
     }
 
-    @action setPhone(phone){
-        this.currentClient.phone = phone;
+    @action setPhone(phone) {
+        this.bufferClient.phone = phone;
     }
 
-    @action setEmail(email){
-        this.currentClient.email = email;
+    @action setEmail(email) {
+        this.bufferClient.email = email;
     }
 
-    @action setBirthDate(birthDate){
-        this.currentClient.birthDate = birthDate;
+    @action setBirthDate(birthDate) {
+        this.bufferClient.birthDate = birthDate;
     }
 
-    @action setComment(comment){
-        this.currentClient.comment = comment;
+    @action setComment(comment) {
+        this.bufferClient.comment = comment;
     }
 
-    @action setWorks(works){
-        this.currentClient.works = works;
+    @action setWorks(works) {
+        this.bufferClient.works = works;
     }
 
-    @action setSearchList(searchList){
+    @action setSearchList(searchList) {
         this.searchList = searchList;
     }
 
-    @action chooseClient(client){
+    @action chooseClient(client) {
         this.currentClient = client;
     }
 
-    @action saveClient(client){
+    @action saveClient(client) {
         fetch('http://mbt-bs.com/whitefox/api/customer', {
             method: "PUT",
             headers: {
@@ -74,10 +74,32 @@ class ClientStore {
         )
     }
 
-    @action setBufferClient(client){
+    @action setBufferClient(client) {
+        let newBufferClient = {};
+        for (let key in client) {
+            newBufferClient[key] = client[key];
+        }
+        this.bufferClient = newBufferClient;
+    }
+
+    @action createNewClient() {
+        let client = {
+            id: null,
+            birthDate: "",
+            comment: "",
+            email: "",
+            name: "",
+            phone: "",
+            workList: []
+        };
         this.bufferClient = client;
     }
 
+    @action addWork(work){
+
+    }
+
 }
+
 const clientStore = new ClientStore();
 export default clientStore;

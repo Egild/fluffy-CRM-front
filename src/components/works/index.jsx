@@ -1,26 +1,40 @@
 import React from 'react';
-
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 
+import classNames from 'classnames/bind';
+
+let cx = classNames.bind();
+@observer
 export default class Works extends React.Component {
-
-
     render(){
-        console.log("this.props", this.props);
         const {appStateStore, works} = this.props;
 
-        const workList = works.map((work) => <div className="work">
-            <div className="work-client">{work.customer.name}</div>
-            <div className="work-service">{work.service.title}</div>
-            <div className="work-date">{work.date}</div>
-        </div>)
-        return (
-
-            <div className="work-list">
-                <div className="work-list-title">Работы:</div>
-                {workList}
+        const workList = works.map((work) => <div className="work-list-item" key={work.id}>
+            <div className="work-list-item-client">
+                <div className="work-list-item-client-title">Клиент:</div>
+                <div className="work-list-item-client-value">{work.customer.name}</div>
             </div>
+            <div className="work-list-item-service">
+                <div className="work-list-item-service-title">Услуга:</div>
+                <div className="work-list-item-service-value">{work.service.title}</div>
+            </div>
+            <div className="work-list-item-date">
+                <div className="work-list-item-date-title">Дата:</div>
+                <div className="work-list-item-date-value">{work.date}</div>
+            </div>
+        </div>);
+        return (<div>
+            <div className="work-list-title">Работы:</div>
+            <div className="work-list">
+                {workList}
+                <div className="btn" onClick={this.openWorkForm}>Добавить</div>
+            </div>
+        </div>
         )
+    }
+
+    openWorkForm = () => {
+        this.props.appStateStore.openWorkEditForm();
     }
 }

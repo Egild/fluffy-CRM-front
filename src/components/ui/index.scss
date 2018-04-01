@@ -1,0 +1,22 @@
+.field
+{
+  margin-bottom: 1rem;
+
+  &-label
+  {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &-input
+  {
+    margin-bottom: .5rem;
+    & > input {
+      display: block;
+      width: 100%;
+      padding: .5rem;
+      border: 1px solid black;
+      border-radius: .5rem;
+    }
+  }
+}

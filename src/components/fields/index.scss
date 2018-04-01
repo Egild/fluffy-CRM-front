@@ -1,0 +1,22 @@
+.field
+{
+  margin-bottom: 1rem;
+
+  &-label
+  {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  &-input
+  {
+    margin-bottom: .25rem;
+
+    & > input
+    {
+      margin-bottom: .25rem;
+    }
+  }
+
+
+}

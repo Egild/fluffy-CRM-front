@@ -19,6 +19,7 @@
     {
       padding: 0.5rem;
       border-radius: 0.5rem;
+      margin-bottom: .5rem;
       border: 1px solid black;
       display: block;
       width: 100%;
@@ -58,14 +59,3 @@
   }
 }
 
-.btn
-{
-  margin: 5px;
-  padding: 10px;
-  cursor: pointer;
-
-  &.hidden
-  {
-    display: none;
-  }
-}

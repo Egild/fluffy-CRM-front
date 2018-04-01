@@ -13,31 +13,27 @@ import './assets/styles/index.scss';
 // components
 
 import Header from './components/header/index.jsx';
-import Footer from './components/footer/index.jsx';
 import ClientForm from './components/client-form/index.jsx';
 
 // stores
-import clientStore from './stores/ClientStore.js';
-import searchStore from './stores/SearchStore.js';
 import appStateStore from './stores/AppStateStore.js';
+import clientStore from './stores/ClientStore.js';
+import directoryStore from "./stores/DirectoryStore.js";
+import servicesStore from "./stores/ServicesStore.js";
+import workStore from "./stores/WorkStore.js";
+import ServicesForm from "./components/service-form/index.jsx";
 
-const stores = {clientStore, searchStore, appStateStore};
+const stores = {appStateStore, clientStore, servicesStore, workStore, directoryStore};
 
 
 class App extends React.Component {
-    constructor(){
-        super();
-        this.state = {
-            currentClient: null
-        }
-    }
     render(){
         return (
                 <Provider {...stores}>
                     <div className="page-wrapper">
-                        <Header appStateStore={appStateStore} clientStore={clientStore}/>
+                        <Header appStateStore={appStateStore} clientStore={clientStore} servicesStore={servicesStore} workStore={workStore} directoryStore={directoryStore} />
                         <ClientForm appStateStore={appStateStore} clientStore={clientStore}/>
-                        <Footer />
+                        <ServicesForm appStateStore={appStateStore} servicesStore={servicesStore} workStore={workStore}/>
                     </div>
                 </Provider>
 

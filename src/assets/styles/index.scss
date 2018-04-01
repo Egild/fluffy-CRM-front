@@ -1,8 +1,17 @@
 @import 'settings.scss';
 @import 'main.scss';
 
+@import '../../components/ui/index.scss';
+@import '../../components/ui/select/index.scss';
+@import '../../components/ui/btn/index.scss';
+
 @import '../../components/header/index.scss';
 @import '../../components/client-item/index.scss';
 @import '../../components/footer/index.scss';
 @import '../../components/client-list/index.scss';
 @import '../../components/side-bar-menu/index.scss';
+
+@import '../../components/works/index.scss';
+@import '../../components/work-form/index.scss';
+@import '../../components/service-form/index.scss';
+

@@ -15,11 +15,7 @@ class Header extends Component {
     @observable searchList;
 
     render(){
-        const {appStateStore, clientStore} = this.props;
-        let buttonClass = cx({
-            btn: true,
-            hidden: !appStateStore.client.addClientButton.show
-        });
+        const {appStateStore, clientStore, servicesStore, workStore, directoryStore} = this.props;
         return <div className="header">
             <div className="header-title">Поиск клиента:</div>
             <input className="search-input"
@@ -28,10 +24,10 @@ class Header extends Component {
                    onChange={this.searchClients}
                    />
             <SearchList appStateStore={appStateStore} clientStore={clientStore}/>
-            <div className={buttonClass} onClick={appStateStore.openAddClientForm}>
+            <div className="btn" onClick={this.openAddClientForm}>
                 Добавить Клиента
             </div>
-            <Client appStateStore={appStateStore} clientStore={clientStore}></Client>
+            <Client appStateStore={appStateStore} clientStore={clientStore} servicesStore={servicesStore} workStore={workStore} directoryStore={directoryStore}></Client>
         </div>
     }
 
@@ -39,7 +35,7 @@ class Header extends Component {
         event.preventDefault();
 
         let searchText = ReactDOM.findDOMNode(this.refs.searchInput).value;
-        this.props.appStateStore.showAddClientButton();
+
         if (searchText.length > 0){
             this.props.appStateStore.openSearchList();
             let query = "http://mbt-bs.com/whitefox/api/customers?name=" + searchText;
@@ -51,9 +47,6 @@ class Header extends Component {
                     this.props.clientStore.setSearchList(data);
                     if (data.length === 0){
                         this.props.appStateStore.closeSearchList();
-                        this.props.appStateStore.showAddClientButton();
-                    } else {
-                        this.props.appStateStore.hideAddClientButton();
                     }
                 })
         } else {
@@ -61,6 +54,11 @@ class Header extends Component {
             this.props.appStateStore.closeSearchList();
 
         }
+    }
+
+    openAddClientForm = () => {
+        this.props.clientStore.createNewClient();
+        this.props.appStateStore.openClientEditForm('edit');
     }
 
 }

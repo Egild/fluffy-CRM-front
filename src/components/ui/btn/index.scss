@@ -1,0 +1,31 @@
+.btn
+{
+  display: block;
+  width: 100%;
+  padding: .25rem;
+  box-sizing: border-box;
+  margin-bottom: .75rem;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  color:  white;
+  background-color: #6ED3CF;
+  border-radius: $defaultBorderRadius;
+
+  &.hidden
+  {
+    display: none;
+  }
+
+  &-wrapper &
+  {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &.cancel
+  {
+    background-color: #E62739;
+  }
+}
